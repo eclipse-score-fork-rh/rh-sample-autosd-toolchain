@@ -1,0 +1,21 @@
+name: AutoSD Build
+on:
+  workflow_dispatch:
+  pull_request_target:
+    types: [opened, reopened, synchronize]
+  merge_group:
+    types: [checks_requested]
+jobs:
+  qnx-build:
+    uses: odra/cicd-workflows/.github/workflows/autosd-build.yml@autosd-bazel-ci
+    permissions:
+      contents: read
+      pull-requests: read
+    strategy:
+      matrix:
+        config:
+          - autosd-x86_64
+    with:
+      bazel-target: '//score/...'
+      bazel-config: ${{ matrix.config }}
+      bazel-disk-cache: ${{ github.workflow }}-${{ github.job }}-${{ matrix.config }}

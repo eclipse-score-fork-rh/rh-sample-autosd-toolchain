@@ -1,0 +1,25 @@
+module(name = "score_toolchain")
+
+bazel_dep(name = "score_bazel_cpp_toolchains", version = "0.5.1")
+
+bazel_dep(name = "score_bazel_platforms", version = "0.1.0")
+
+gcc = use_extension("@score_bazel_cpp_toolchains//extensions:gcc.bzl", "gcc")
+
+gcc.toolchain(
+    name = "score_autosd_10_toolchain",
+    target_cpu = "x86_64",
+    target_os = "linux",
+    runtime_ecosystem = "autosd10",
+    use_default_package = True,
+)
+
+gcc.toolchain(
+    name = "score_autosd_10_toolchain",
+    target_cpu = "aarch64",
+    target_os = "linux",
+    runtime_ecosystem = "autosd10",
+    use_default_package = True,
+)
+
+use_repo(gcc, "score_autosd_10_toolchain")
