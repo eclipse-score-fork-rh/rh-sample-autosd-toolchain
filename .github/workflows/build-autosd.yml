@@ -24,7 +24,7 @@ jobs:
             runner: ubuntu-24.04
     uses: odra/cicd-workflows/.github/workflows/autosd-build.yml@autosd-bazel-ci
     with:
-      runner-labels: ${{ matrix.runner }}
+      runner_label: ${{ matrix.runner }}
       arch: ${{ matrix.arch }}
       bazel-target: '//score/...'
       bazel-disk-cache: ${{ github.workflow }}-${{ github.job }}-${{ matrix.score_platform }}
