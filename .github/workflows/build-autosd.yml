@@ -14,8 +14,8 @@ jobs:
     strategy:
       matrix:
         config:
-          - autosd-x86_64
+          - x86_64
     with:
+      arch: ${{ matrix.config }}
       bazel-target: '//score/...'
-      bazel-config: ${{ matrix.config }}
       bazel-disk-cache: ${{ github.workflow }}-${{ github.job }}-${{ matrix.config }}
