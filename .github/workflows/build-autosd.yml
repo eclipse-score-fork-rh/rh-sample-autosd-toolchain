@@ -7,15 +7,24 @@ on:
     types: [checks_requested]
 jobs:
   autosd-build:
-    uses: odra/cicd-workflows/.github/workflows/autosd-build.yml@autosd-bazel-ci
     permissions:
       contents: read
       pull-requests: read
     strategy:
       matrix:
-        config:
-          - x86_64
+        score_platform:
+          - autosd-aarch64
+          - autosd-x86_64
+        include:
+          - score_platform: autosd-aarch64
+            arch: aarch64
+            runner: ubuntu-24.04-arm
+          - score_platform: autosd-x86_64
+            arch: x86_64
+            runner: ubuntu-24.04
+    uses: odra/cicd-workflows/.github/workflows/autosd-build.yml@autosd-bazel-ci
     with:
-      arch: ${{ matrix.config }}
+      runner-labels: ${{ matrix.runner }}
+      arch: ${{ matrix.arch }}
       bazel-target: '//score/...'
-      bazel-disk-cache: ${{ github.workflow }}-${{ github.job }}-${{ matrix.config }}
+      bazel-disk-cache: ${{ github.workflow }}-${{ github.job }}-${{ matrix.score_platform }}
