@@ -6,7 +6,7 @@ on:
   merge_group:
     types: [checks_requested]
 jobs:
-  qnx-build:
+  autosd-build:
     uses: odra/cicd-workflows/.github/workflows/autosd-build.yml@autosd-bazel-ci
     permissions:
       contents: read
